@@ -2,16 +2,12 @@ package com.example.blackdandan.retrofitsourcecodeanylize;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.telecom.Call;
 
-import com.example.blackdandan.retrofitsourcecodeanylize.retrofit.Retrofit;
+import com.example.blackdandan.retrofitsourcecodeanylize.diyretrofit.DiyCall;
+import com.example.blackdandan.retrofitsourcecodeanylize.diyretrofit.DiyRetrofit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,9 +15,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Retrofit retrofit = new Retrofit();
-        ServiceTest serviceTest = retrofit.create(ServiceTest.class);
-        serviceTest.test();
+        DiyRetrofit diyRetrofit = new DiyRetrofit();
+        ServiceTest serviceTest = diyRetrofit.create(ServiceTest.class);
+        final DiyCall<String> call = serviceTest.test();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("do====result:"+call.execute());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
 
     }
 }
