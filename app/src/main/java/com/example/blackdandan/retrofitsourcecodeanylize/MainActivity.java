@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DiyRetrofit diyRetrofit = new DiyRetrofit();
+        DiyRetrofit diyRetrofit = new DiyRetrofit.Builder().baseUrl("http://www.baidu.com/").build();
         ServiceTest serviceTest = diyRetrofit.create(ServiceTest.class);
         final DiyCall<String> call = serviceTest.test();
 

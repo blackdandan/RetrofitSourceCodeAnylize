@@ -18,6 +18,10 @@ import okhttp3.internal.http.HttpMethod;
 import retrofit2.Retrofit;
 
 public class DiyRetrofit {
+    String baseUrl;
+    DiyRetrofit(String baseUrl){
+        this.baseUrl = baseUrl;
+    }
     /**
      * 首先学习一下动态代理,就是用Java的Proxy在运行时为class生成一个代理类
      * 当class被执行的时候运行代理类里面的invoke方法
@@ -61,5 +65,18 @@ public class DiyRetrofit {
             }
         }
         return new RealCall(path,httpMethod);
+    }
+    public static final class Builder{
+        String baseUrl ;
+        public Builder(){
+
+        }
+        public Builder baseUrl(String url){
+            this.baseUrl = url;
+            return this;
+        }
+        public DiyRetrofit build(){
+            return new DiyRetrofit(baseUrl);
+        }
     }
 }
